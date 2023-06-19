@@ -12,7 +12,9 @@ class Main {
         for (int i = 0; i < depth - 1; i++) {
             str = str.repeat(3);
         }
-        return cantor(depth - 1) + str + cantor(depth - 1);
+
+        String fix = cantor(depth - 1);
+        return fix + str + fix;
     }
 
 
