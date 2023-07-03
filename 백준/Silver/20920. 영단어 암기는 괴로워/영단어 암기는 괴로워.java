@@ -7,15 +7,14 @@ class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
         StringBuilder sb = new StringBuilder();
 
         TreeMap<String, Integer> map = new TreeMap<>((o1, o2) -> {
-                if (o1.length() > o2.length()) return -1;
-                else if (o1.length() < o2.length()) return 1;
-                else return o1.compareTo(o2);
+            if (o1.length() != o2.length()) return -(o1.length() - o2.length());
+            else return o1.compareTo(o2);
         });
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
@@ -29,7 +28,7 @@ class Main {
         List<String> result = new ArrayList<>(map.keySet());
         result.sort((o1, o2) -> -(map.get(o1) - map.get(o2)));
 
-        for(String s :result) sb.append(s).append("\n");
+        for (String s : result) sb.append(s).append("\n");
         System.out.println(sb);
     }
 }
