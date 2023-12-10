@@ -2,28 +2,36 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-//https://www.acmicpc.net/problem/1149
 
 class Main {
+
+    static int maxValue;
+    static int[] dp;
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken()); // item 수
-        int k = Integer.parseInt(st.nextToken()); //최대무게
-        int[][] dp = new int[n + 1][k + 1];
-        int w, v; //무게, 가치
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
-        for (int i = 1; i <= n; i++) {
+        dp = new int[K + 1];
+
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            w = Integer.parseInt(st.nextToken());
-            v = Integer.parseInt(st.nextToken());
-            for (int j = 1; j <= k; j++) {
-                if (w > j) dp[i][j] = dp[i - 1][j];
-                else dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
-            }
+            int w = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            knapsack(w, v);
         }
 
-        System.out.println(dp[n][k]);
+        System.out.println(maxValue);
+    }
+
+
+    private static void knapsack(int w, int v) {
+        for (int i = dp.length - 1; w <= i; i--) {
+            dp[i] = Math.max(dp[i - w] + v, dp[i]);
+            maxValue = Math.max(dp[i], maxValue);
+        }
     }
 }
