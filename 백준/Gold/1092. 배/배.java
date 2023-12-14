@@ -8,31 +8,30 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        List<Integer> crane = new ArrayList<>();
-        List<Integer> box = new ArrayList<>();
-
         int N = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        while (N-- > 0) {
-            crane.add(Integer.parseInt(st.nextToken()));
+        int[] crane = new int[N];
+        for (int i = 0; i < N; i++) {
+            crane[i] = Integer.parseInt(st.nextToken());
         }
+
         int M = Integer.parseInt(br.readLine());
+        List<Integer> box = new ArrayList<>();
         st = new StringTokenizer(br.readLine());
         while (M-- > 0) {
             box.add(Integer.parseInt(st.nextToken()));
         }
-
-        crane.sort(Comparator.reverseOrder());
         Collections.sort(box);
 
-        if (crane.get(0) < box.get(box.size() - 1)) {
+        int maxCrane = Arrays.stream(crane).max().orElse(-1);
+        if (maxCrane < box.get(box.size() - 1)) {
             System.out.println(-1);
             return;
         }
 
         int cnt = 0;
         while (!box.isEmpty()) {
-            for (Integer currentCrane : crane) {
+            for (int currentCrane : crane) {
                 int idx = binarySearch(currentCrane, box);
 
                 if (idx != -1) {
@@ -45,7 +44,7 @@ class Main {
 
     }
 
-    private static int binarySearch(Integer target, List<Integer> box) {
+    private static int binarySearch(int target, List<Integer> box) {
         if (box.size() == 1 && target >= box.get(0)) return 0;
         if (box.isEmpty() || target < box.get(0)) return -1;
 
